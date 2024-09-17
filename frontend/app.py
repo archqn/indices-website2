@@ -11,6 +11,7 @@ engine = create_engine('mysql+mysqlconnector://indices_website_user:Indices-MySQ
 
 # Create a Dash app
 app = dash.Dash(__name__)
+server = app.server 
 
 # App layout
 app.layout = html.Div([
