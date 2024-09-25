@@ -32,7 +32,7 @@ app.layout = html.Div([
      Input('date-picker-range', 'end_date')]
 )
 def update_graph(start_date, end_date):
-    # Query data from MySQL based on the date range
+    # ---------------------------- MYSQL QUERY ----------------------------
     query = f"SELECT * FROM solar_wind_new WHERE timestamp >= '{start_date}' AND timestamp <= '{end_date}'"
     df = pd.read_sql(query, engine)
     
