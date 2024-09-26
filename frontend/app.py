@@ -33,33 +33,33 @@ app.layout = html.Div([
 )
 def update_graph(start_date, end_date):
     # ---------------------------- MYSQL QUERY ----------------------------
-    query = f"SELECT * FROM solar_wind_new WHERE timestamp >= '{start_date}' AND timestamp <= '{end_date}'"
+    query = f"SELECT * FROM solar_wind_3 WHERE timestamp >= '{start_date}' AND timestamp <= '{end_date}'"
     df = pd.read_sql(query, engine)
     
     # Create the figure using Plotly
     fig = make_subplots(
-        rows=4, cols=1,  # 4 rows for the 4 parameters
+        rows=5, cols=1,  # 4 rows for the 4 parameters
         shared_xaxes=True,  # Share x-axis (timestamp) across all plots
         vertical_spacing=0.025  # Space between plots
     )
 
-    # Add a trace for BZ_GSM in the first row
     fig.add_trace(go.Scatter(x=df['timestamp'], y=df['BZ_GSM'], mode='lines', name='BZ_GSM'), row=1, col=1)
+    fig.add_trace(go.Scatter(x=df['timestamp'], y=df['BX_GSE'], mode='lines', name='BX_GSE'), row=1, col=1)
+    fig.add_trace(go.Scatter(x=df['timestamp'], y=df['BY_GSM'], mode='lines', name='BY_GSM'), row=1, col=1)
+    fig.add_trace(go.Scatter(x=df['timestamp'], y=df['btot'], mode='lines', name='Btotal'), row=1, col=1)
 
-    # Add a trace for flow_speed in the second row
+
     fig.add_trace(go.Scatter(x=df['timestamp'], y=df['flow_speed'], mode='lines', name='Flow Speed'), row=2, col=1)
-
-    # Add a trace for proton_density in the third row
     fig.add_trace(go.Scatter(x=df['timestamp'], y=df['proton_density'], mode='lines', name='Proton Density'), row=3, col=1)
-
-    # Add a trace for T (Temperature) in the fourth row
     fig.add_trace(go.Scatter(x=df['timestamp'], y=df['T'], mode='lines', name='Temperature'), row=4, col=1)
+    fig.add_trace(go.Scatter(x=df['timestamp'], y=df['etl'], mode='lines', name='etl'), row=5, col=1)
 
-    fig.update_xaxes(title_text='Timestamp', row=4, col=1)
+    fig.update_xaxes(title_text='Timestamp', row=5, col=1)
     fig.update_yaxes(title_text='BZ_GSM', row=1, col=1)
     fig.update_yaxes(title_text='Flow Speed', row=2, col=1)
     fig.update_yaxes(title_text='Proton Density', row=3, col=1)
     fig.update_yaxes(title_text='Temperature', row=4, col=1)
+    fig.update_yaxes(title_text='ETL', row=5, col=1)
 
     # Update layout to include title and labels
     fig.update_layout(

@@ -76,7 +76,7 @@ def upload_data_to_mysql(df, chunksize=1000):
     df.to_sql('solar_wind_3', con=engine, if_exists='replace', index=False, chunksize=chunksize)
 
 if __name__ == "__main__":
-    res = '1min'
+    res = '5min'
     level = 'hro'
     data_BZ_GSM = omni_load_raw_pickled('BZ_GSM', res, level)
     df = convert_to_dataframe(data_BZ_GSM, 'BZ_GSM')
